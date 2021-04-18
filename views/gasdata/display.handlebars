@@ -1,0 +1,18 @@
+<div class="container-fluid">
+  {{#each msgs}}  
+  <div class="row">
+    <div class="col-sm-3">
+    </div>
+    <div class="col-sm-4">
+      <h5>time: {{timestamp}}</h5>
+    </div>
+        <div class="col-sm-2">
+      <h5>value: {{value}}</h5>
+    </div>
+    <div class="col-sm-3">
+    </div>
+  </div>
+  {{else}}
+    <p>No messages to list</p>
+  {{/each}}
+</div>
