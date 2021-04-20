@@ -14,11 +14,11 @@ module.exports = function (app) {
                 else {
                     const mockedMsgs = mock();
                     Msgs.create(mockedMsgs, (err, results) => {
-                        if (err) console.log(err);
+                        if (err) next(err);
                     });
                     req.flash('success_msg', 'New data generated');
                 }
-                res.redirect('/');
+                res.redirect('/flash');
             });
     });
 
@@ -30,18 +30,18 @@ module.exports = function (app) {
             .then(msgs => {
                 if (msgs.length > 0){
                     Msgs.deleteMany({}, (err, results) => {
-                        if (err) console.log(err);
+                        if (err) next(err);
                     });
                     req.flash('success_msg', 'Data succesfully deleted');
                 }
                 else {
                     const mockedMsgs = mock();
                     Msgs.create(mockedMsgs, (err, results) => {
-                        if (err) console.log(err);
+                        if (err) next(err);
                     });
                     req.flash('error_msg', 'Database empty');
                 }
-                res.redirect('/');
+                res.redirect('/flash');
             });
     });
 

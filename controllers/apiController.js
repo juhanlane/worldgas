@@ -6,11 +6,17 @@ module.exports = function (app) {
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
 
-    // Index Route
+    // Index page
     app.get('/', (req, res) => {
         const title = 'Welcome';
         res.render('index', {
             title: title
+        });
+    });
+
+    // Empty flash page
+    app.get('/flash', (req, res) => {
+        res.render('flash', {
         });
     });
 
@@ -25,7 +31,6 @@ module.exports = function (app) {
             .sort({ timestamp: 'asc' })
             .then(msgs => {
                 if(msgs.length > 0) {
-                    console.log(`Inside msgs.length > 0 branch`);
                     msgs.forEach( msg => msg.timestamp = new Date(msg.timestamp * 1000).toLocaleString());
                     res.render('gasdata/display', {
                         msgs: msgs
@@ -33,7 +38,7 @@ module.exports = function (app) {
                 }
                 else {
                     req.flash('error_msg', 'No data to display');
-                    res.redirect('/');
+                    res.redirect('/flash');
                 }
             });
             
