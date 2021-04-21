@@ -9,12 +9,12 @@ module.exports = function (app) {
             .sort({ timestamp: 'asc' })
             .then(msgs => {
                 if (msgs.length > 0){
-                    req.flash('error_msg', 'Data already present');
+                    req.flash('error_msg', 'Data is already present on database');
                 }
                 else {
-                    const mockedMsgs = mock();
-                    Msgs.create(mockedMsgs, (err, results) => {
-                        if (err) next(err);
+                    const mockedmsgs = mock();
+                    Msgs.create(mockedmsgs, (err, results) => {
+                        if (err) console.log(err);
                     });
                     req.flash('success_msg', 'New data generated');
                 }
@@ -30,16 +30,12 @@ module.exports = function (app) {
             .then(msgs => {
                 if (msgs.length > 0){
                     Msgs.deleteMany({}, (err, results) => {
-                        if (err) next(err);
+                        if (err) console.log(err);
                     });
                     req.flash('success_msg', 'Data succesfully deleted');
                 }
                 else {
-                    const mockedMsgs = mock();
-                    Msgs.create(mockedMsgs, (err, results) => {
-                        if (err) next(err);
-                    });
-                    req.flash('error_msg', 'Database empty');
+                    req.flash('error_msg', 'Attempt to delete from empty database');
                 }
                 res.redirect('/flash');
             });
